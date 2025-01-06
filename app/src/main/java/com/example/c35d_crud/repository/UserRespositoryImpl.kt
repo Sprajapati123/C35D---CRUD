@@ -1,14 +1,27 @@
 package com.example.c35d_crud.repository
 
+import android.widget.Toast
 import com.example.c35d_crud.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class UserRespositoryImpl : UserRepository {
 
     var auth : FirebaseAuth = FirebaseAuth.getInstance()
 
+    var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    var reference = database.reference.child("users")
+
+
     override fun login(email: String, password: String, callback: (Boolean, String) -> Unit) {
-        TODO("Not yet implemented")
+
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
+            if(it.isSuccessful){
+                callback(true,"Login success")
+            }else{
+                callback(false,it.exception?.message.toString())
+            }
+        }
     }
 
     override fun register(
@@ -27,7 +40,13 @@ class UserRespositoryImpl : UserRepository {
     }
 
     override fun forgetPassword(email: String, callback: (Boolean, String) -> Unit) {
-        TODO("Not yet implemented")
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {
+            if(it.isSuccessful){
+                callback(true,"Password reset link sent to $email")
+            }else{
+                callback(false,it.exception?.message.toString())
+            }
+        }
     }
 
     override fun addUserToDatabase(
@@ -35,6 +54,13 @@ class UserRespositoryImpl : UserRepository {
         userModel: UserModel,
         callback: (Boolean, String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        reference.child(userId).setValue(userModel)
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    callback(true,"Registration Successfull")
+                }else{
+                    callback(false,it.exception?.message.toString())
+                }
+            }
     }
 }
