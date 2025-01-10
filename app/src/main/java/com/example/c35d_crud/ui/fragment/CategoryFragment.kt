@@ -1,4 +1,4 @@
-package com.example.a35b_crud.ui.fragment
+package com.example.a35d_crud.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+
+import com.example.c35d_crud.R
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"

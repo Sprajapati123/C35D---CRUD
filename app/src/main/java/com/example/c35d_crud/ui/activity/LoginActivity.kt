@@ -23,22 +23,27 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadingUtils.show()
-        var email :String = binding.editEmail.text.toString()
-        var password :String = binding.editPassword.text.toString()
 
-        userViewModel.login(email,password){
-                success,message->
-            if(success){
-                Toast.makeText(this@LoginActivity,message, Toast.LENGTH_LONG).show()
-                loadingUtils.dismiss()
-                var intent = Intent(this@LoginActivity,NavigationActivity::class.java)
-                startActivity(intent)
-                finish()
-            }else{
-                Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
-                loadingUtils.dismiss()
+        loadingUtils = LoadingUtils(this)
 
+        binding.btnLogin.setOnClickListener {
+            loadingUtils.show()
+            var email :String = binding.editEmail.text.toString()
+            var password :String = binding.editPassword.text.toString()
+
+            userViewModel.login(email,password){
+                    success,message->
+                if(success){
+                    Toast.makeText(this@LoginActivity,message, Toast.LENGTH_LONG).show()
+                    loadingUtils.dismiss()
+                    var intent = Intent(this@LoginActivity,NavigationActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
+                    loadingUtils.dismiss()
+
+                }
             }
         }
         binding.btnSignupnavigate.setOnClickListener {
