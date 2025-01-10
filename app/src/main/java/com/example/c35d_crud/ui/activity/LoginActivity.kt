@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.c35d_crud.R
 import com.example.c35d_crud.databinding.ActivityLoginBinding
+import com.example.c35d_crud.repository.UserRespositoryImpl
 import com.example.c35d_crud.utils.LoadingUtils
 import com.example.c35d_crud.viewmodel.UserViewModel
 
@@ -23,6 +24,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        var repo = UserRespositoryImpl()
+        userViewModel = UserViewModel(repo)
 
         loadingUtils = LoadingUtils(this)
 
