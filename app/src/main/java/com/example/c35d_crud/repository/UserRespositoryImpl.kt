@@ -4,7 +4,10 @@ import android.widget.Toast
 import com.example.c35d_crud.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class UserRespositoryImpl : UserRepository {
 
@@ -77,9 +80,7 @@ class UserRespositoryImpl : UserRepository {
         }
     }
 
-    override fun getCurrentUser(): FirebaseUser? {
-        return auth.currentUser
-    }
+
 
     override fun editProfile(
         userId: String,
@@ -95,11 +96,26 @@ class UserRespositoryImpl : UserRepository {
         }
     }
 
+    override fun getCurrentUser(): FirebaseUser? {
+        return auth.currentUser
+    }
 
     override fun getUserFromDatabase(
         userId: String,
         callback: (UserModel?, Boolean, String) -> Unit
     ) {
-//        reference.child(userId).addValueEventListener()
+        reference.child(userId)
+                .addValueEventListener(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.exists()){
+                            var userModel = snapshot.getValue(UserModel::class.java)
+                            callback(userModel,true,"Fetched")
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        callback(null,false,error.message)
+                    }
+                })
     }
 }
