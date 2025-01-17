@@ -40,7 +40,7 @@ class ProfileFragment : Fragment() {
         }
 
         userViewModel.userData.observe(requireActivity()){
-            binding.profileName.text = it?.firstName + " " + it?.lastName
+            binding.profileName.text = "${it?.firstName} ${it?.lastName}"
             binding.profileEmail.text = it?.email.toString()
         }
     }
