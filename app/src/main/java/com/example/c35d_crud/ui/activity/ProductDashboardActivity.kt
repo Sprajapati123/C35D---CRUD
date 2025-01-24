@@ -2,6 +2,7 @@ package com.example.c35d_crud.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -39,8 +40,18 @@ class ProductDashboardActivity : AppCompatActivity() {
             }
         }
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(this)
 
+
+        productViewModel.loading.observe(this){loading->
+            if(loading){ //true
+                binding.progressBar.visibility = View.VISIBLE
+            }else{
+                binding.progressBar.visibility = View.GONE
+
+            }
+        }
 
 
 
