@@ -51,7 +51,7 @@ class ProductViewModel (val repo : ProductRepository){
       }
     }
 
-    fun getAllProducts(){
+    fun getAllProductsFunc(){
         _loading.value = true
         repo.getAllProducts{
             products,success,message->
