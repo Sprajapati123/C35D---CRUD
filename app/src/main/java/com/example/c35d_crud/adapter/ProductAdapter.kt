@@ -1,6 +1,7 @@
 package com.example.c35d_crud.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,14 +21,27 @@ class ProductAdapter(var context: Context,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        TODO("Not yet implemented")
+        val itemView : View = LayoutInflater.from(context).inflate(
+            R.layout.sample_products,
+            parent,false)
+        return ProductViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return data.size
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        TODO("Not yet implemented")
+       holder.productName.text = data[position].productName
+       holder.productPrice.text = data[position].price.toString()
+       holder.productDesc.text = data[position].productDesc
     }
+
+    fun updateData(products: List<ProductModel>){
+        data.clear()
+        data.addAll(products)
+        notifyDataSetChanged()
+    }
+
+
 }
