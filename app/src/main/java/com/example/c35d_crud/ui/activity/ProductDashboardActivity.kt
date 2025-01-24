@@ -8,9 +8,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.c35d_crud.R
 import com.example.c35d_crud.databinding.ActivityProductDashboardBinding
+import com.example.c35d_crud.viewmodel.ProductViewModel
 
 class ProductDashboardActivity : AppCompatActivity() {
     lateinit var binding: ActivityProductDashboardBinding
+
+    lateinit var productViewModel: ProductViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,11 +23,15 @@ class ProductDashboardActivity : AppCompatActivity() {
         binding = ActivityProductDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         binding.floatingActionButton.setOnClickListener {
             val intent = Intent(this@ProductDashboardActivity,
                 AddProductActivity::class.java)
             startActivity(intent)
         }
+
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
