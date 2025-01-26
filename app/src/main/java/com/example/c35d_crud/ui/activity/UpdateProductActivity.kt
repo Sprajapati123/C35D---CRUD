@@ -1,6 +1,7 @@
 package com.example.c35d_crud.ui.activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -28,12 +29,12 @@ class UpdateProductActivity : AppCompatActivity() {
 //        var products : ProductModel? =
 //                        intent.getParcelableExtra("products")
 
-        var productId : String = intent.getStringExtra("products")
-                                                    .toString()
+        var productId: String = intent.getStringExtra("products")
+            .toString()
 
         productViewModel.getProductById(productId)
 
-        productViewModel.products.observe(this){
+        productViewModel.products.observe(this) {
             binding.updateName.setText(it?.productName.toString())
             binding.updateDesc.setText(it?.productDesc.toString())
             binding.updatePrice.setText(it?.price.toString())
@@ -44,17 +45,18 @@ class UpdateProductActivity : AppCompatActivity() {
             var price = binding.updatePrice.text.toString().toInt()
             var desc = binding.updateDesc.text.toString()
 
-            var updatedData = mutableMapOf<String,Any>()
+            var updatedData = mutableMapOf<String, Any>()
 
             updatedData["productName"] = name
             updatedData["productDesc"] = price
             updatedData["price"] = desc
 
-            productViewModel.updateProduct(productId,updatedData){
-                success,message->
-                if(success){
+            productViewModel.updateProduct(productId, updatedData) { success, message ->
+                if (success) {
+                    Toast.makeText(this@UpdateProductActivity, message, Toast.LENGTH_LONG).show()
                     finish()
-                }else{
+                } else {
+                    Toast.makeText(this@UpdateProductActivity, message, Toast.LENGTH_LONG).show()
 
                 }
             }
