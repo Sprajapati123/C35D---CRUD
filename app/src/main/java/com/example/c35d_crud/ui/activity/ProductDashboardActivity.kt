@@ -54,9 +54,6 @@ class ProductDashboardActivity : AppCompatActivity() {
         }
 
 
-
-
-
         binding.floatingActionButton.setOnClickListener {
             val intent = Intent(this@ProductDashboardActivity,
                 AddProductActivity::class.java)

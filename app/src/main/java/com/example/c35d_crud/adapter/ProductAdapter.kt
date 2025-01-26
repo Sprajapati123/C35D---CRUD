@@ -1,6 +1,7 @@
 package com.example.c35d_crud.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.c35d_crud.R
 import com.example.c35d_crud.model.ProductModel
+import com.example.c35d_crud.ui.activity.UpdateProductActivity
 
 class ProductAdapter(var context: Context,
                      var data : ArrayList<ProductModel>)
@@ -15,6 +17,7 @@ class ProductAdapter(var context: Context,
 
     class ProductViewHolder(itemView: View)
         : RecyclerView.ViewHolder(itemView){
+            var btnEdit : TextView = itemView.findViewById(R.id.btnEdit)
             var productName : TextView = itemView.findViewById(R.id.displayName)
             var productPrice : TextView = itemView.findViewById(R.id.displayPrice)
             var productDesc : TextView = itemView.findViewById(R.id.displayDesc)
@@ -35,6 +38,12 @@ class ProductAdapter(var context: Context,
        holder.productName.text = data[position].productName
        holder.productPrice.text = data[position].price.toString()
        holder.productDesc.text = data[position].productDesc
+
+        holder.btnEdit.setOnClickListener {
+            val intent = Intent(context,UpdateProductActivity::class.java)
+            intent.putExtra("products",data[position].productId)
+            context.startActivity(intent)
+        }
     }
 
     fun updateData(products: List<ProductModel>){
