@@ -38,6 +38,27 @@ class UpdateProductActivity : AppCompatActivity() {
             binding.updateDesc.setText(it?.productDesc.toString())
             binding.updatePrice.setText(it?.price.toString())
         }
+
+        binding.btnUpdate.setOnClickListener {
+            var name = binding.updateName.text.toString()
+            var price = binding.updatePrice.text.toString().toInt()
+            var desc = binding.updateDesc.text.toString()
+
+            var updatedData = mutableMapOf<String,Any>()
+
+            updatedData["productName"] = name
+            updatedData["productDesc"] = price
+            updatedData["price"] = desc
+
+            productViewModel.updateProduct(productId,updatedData){
+                success,message->
+                if(success){
+                    finish()
+                }else{
+
+                }
+            }
+        }
 //        products.let {
 //            binding.updateName.setText(it?.productName.toString())
 //            binding.updateDesc.setText(it?.productDesc.toString())
