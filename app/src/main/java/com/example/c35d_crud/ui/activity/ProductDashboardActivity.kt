@@ -3,11 +3,14 @@ package com.example.c35d_crud.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.c35d_crud.R
 import com.example.c35d_crud.adapter.ProductAdapter
 import com.example.c35d_crud.databinding.ActivityProductDashboardBinding
@@ -60,6 +63,33 @@ class ProductDashboardActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+               var productId = adapter.getProductId(viewHolder.adapterPosition)
+
+                productViewModel.deleteProduct(productId){
+                    success,message->
+                    if(success){
+                        Toast.makeText(this@ProductDashboardActivity,
+                            message,Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this@ProductDashboardActivity,message,Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+            }
+
+        }).attachToRecyclerView(binding.recyclerView)
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

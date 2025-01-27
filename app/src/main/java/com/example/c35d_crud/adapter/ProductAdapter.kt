@@ -39,6 +39,7 @@ class ProductAdapter(var context: Context,
        holder.productPrice.text = data[position].price.toString()
        holder.productDesc.text = data[position].productDesc
 
+
         holder.btnEdit.setOnClickListener {
             val intent = Intent(context,UpdateProductActivity::class.java)
             intent.putExtra("products",data[position].productId)
@@ -50,7 +51,11 @@ class ProductAdapter(var context: Context,
         data.clear()
         data.addAll(products)
         notifyDataSetChanged()
+
     }
 
+    fun getProductId(position: Int) : String{
+        return data[position].productId
+    }
 
 }
